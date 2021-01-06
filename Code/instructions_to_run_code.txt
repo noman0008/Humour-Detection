@@ -1,0 +1,15 @@
+1. make sure all requirements are met: pip install -r requirements.txt
+
+2. download the dataset from https://www.yelp.com/dataset/challenge (yelp_academic_dataset_review.json) and put in the dataset folder. 
+
+3.1 SVM: Run 'python preprocess.py'. It will ask for an output file name ('data.txt') and will generate the output balanced file with reviews. Go to ./SVM folder and run 'python SVM.py' 
+3.2 For checking model on different dataset run 'python preprocess_secondary_dataset.py' then run 'python SVM.py'.
+
+4. FFN: Go to ./FFN and run 'python Create_w2v_FFN.py data.txt' #path of data.txt file (o/p file of preprocess.py program). Then run 'python Feed_Forward.py'.
+
+5. CNN: Download Word2Vec bin file from https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit. Go to ./CNN and then run the following sequentially:
+python CNN/Create_dataset.py data.txt #path of data.txt file (o/p file of preprocess.py program)
+python CNN/preprocess_cnn.py path # path of Google Word2Vec bin file
+THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python CNN/conv_net_train.py -static -word2vec
+THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python CNN/conv_net_train.py -nonstatic -rand
+THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python CNN/conv_net_train.py -nonstatic -word2vec
